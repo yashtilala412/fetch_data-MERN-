@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Spinner from './Spinner'; // Import the Spinner component
 
 function ReadIdols() {
   const [idols, setIdols] = useState([]);
   const [editIdol, setEditIdol] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchIdols = async () => {
@@ -12,6 +14,8 @@ function ReadIdols() {
         setIdols(response.data);
       } catch (error) {
         console.error('Error:', error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
     fetchIdols();
@@ -68,27 +72,31 @@ function ReadIdols() {
   return (
     <div>
       <h2>All Idols</h2>
-      <ul>
-        {idols.map(idol => (
-          <li key={idol._id}>
-            {editIdol === idol._id ? (
-              <>
-                <input type="text" value={idol.name} onChange={(e) => handleChange(e, 'name', idol._id)} />
-                <input type="text" value={idol.height} onChange={(e) => handleChange(e, 'height', idol._id)} />
-                <input type="text" value={idol.category} onChange={(e) => handleChange(e, 'category', idol._id)} />
-                <input type="text" value={idol.price} onChange={(e) => handleChange(e, 'price', idol._id)} />
-                <button onClick={() => handleSave(idol._id)}>Save</button>
-              </>
-            ) : (
-              <>
-                {idol.name} - {idol.height} - {idol.category} - {idol.price}
-                <button onClick={() => handleEdit(idol._id)}>Edit</button>
-                <button onClick={() => handleDelete(idol._id)}>Delete</button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
+      {loading ? (
+        <Spinner /> // Show spinner while loading
+      ) : (
+        <ul>
+          {idols.map(idol => (
+            <li key={idol._id}>
+              {editIdol === idol._id ? (
+                <>
+                  <input type="text" value={idol.name} onChange={(e) => handleChange(e, 'name', idol._id)} />
+                  <input type="text" value={idol.height} onChange={(e) => handleChange(e, 'height', idol._id)} />
+                  <input type="text" value={idol.category} onChange={(e) => handleChange(e, 'category', idol._id)} />
+                  <input type="text" value={idol.price} onChange={(e) => handleChange(e, 'price', idol._id)} />
+                  <button onClick={() => handleSave(idol._id)}>Save</button>
+                </>
+              ) : (
+                <>
+                  {idol.name} - {idol.height} - {idol.category} - {idol.price}
+                  <button onClick={() => handleEdit(idol._id)}>Edit</button>
+                  <button onClick={() => handleDelete(idol._id)}>Delete</button>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
