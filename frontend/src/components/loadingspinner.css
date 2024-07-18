@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: #7f8c8d;
+    background: linear-gradient(45deg, #f3ec78, #af4261);
     opacity: 0.6;
     position: absolute;
     top: 0;
