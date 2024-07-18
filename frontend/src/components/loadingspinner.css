@@ -15,7 +15,7 @@
     top: 0;
     left: 0;
     animation: bounce 2.0s infinite ease-in-out;
-    background: linear-gradient(45deg, #fbc2eb, #ffd1ff);
+    background: linear-gradient(45deg, #a1c4fd, #c2e9fb);
   }
   
   .double-bounce2 {
